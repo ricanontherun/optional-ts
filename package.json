@@ -1,0 +1,24 @@
+{
+  "name": "typescript-optional",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "tsc": "node_modules/.bin/tsc",
+    "test": "node_modules/mocha/bin/mocha --full-trace -r  ./node_modules/ts-node/register index.spec.ts",
+    "prepublishOnly": "npm install && npm run tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.12.2",
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.14.0",
+    "typescript": "^3.4.1"
+  }
+}
