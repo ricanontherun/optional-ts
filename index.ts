@@ -1,22 +1,45 @@
+/**
+ * Class Optional<T>
+ *
+ *  Represent a value of type T, which may be empty (null).
+ */
 export class Optional<T> {
+  /**
+   * Create an empty Optional.
+   */
   public static empty<T>(): Optional<T> {
     return new Optional<T>(null);
   }
 
-  public static of<T>(value: T): Optional<T> {
+  /**
+   * Create an Optional with a value.
+   *
+   * @param value
+   */
+  public static of<T>(value: any): Optional<T> {
     return new Optional(value);
   }
 
-  public static ofNullable<T>(value: T | null): Optional<T | null> {
+  /**
+   * Create an Optional with possibly null value.
+   *
+   * @param value
+   */
+  public static ofNullable<T>(value: any): Optional<T> {
     return value ? Optional.of(value) : Optional.empty();
   }
 
   protected value!: T | null;
 
-  protected constructor(value: T | null) {
+  protected constructor(value: any) {
     this.value = value;
   }
 
+  /**
+   * Get the value
+   *
+   * @throws Error
+   */
   public get(): T {
     if (!this.value) {
       throw new Error("Empty optional");
@@ -25,26 +48,29 @@ export class Optional<T> {
     return this.value;
   }
 
-  public isPresent(): boolean {
-    return !!this.value;
-  }
-
-  public async ifPresent(consumer: (value: T) => Promise<any>): Promise<any> {
-    if (this.value) {
-      return consumer(this.value);
-    }
-
-    return;
-  }
-
+  /**
+   * Get the value, if non-null, returning other if null.
+   *
+   * @param other
+   */
   public orElse(other: T): T {
     return this.value ? this.value : other;
   }
 
+  /**
+   * Get the value, if non-null, executing supplier() if null.
+   *
+   * @param supplier
+   */
   public async orElseGet(supplier: () => T): Promise<T> {
     return this.value ? this.value : supplier();
   }
 
+  /**
+   * Get the value, if non-null, throwing an Error if null
+   *
+   * @throws Error
+   */
   public orElseThrow(): T {
     if (this.value) {
       return this.value;
@@ -53,6 +79,30 @@ export class Optional<T> {
     throw new Error("Empty optional");
   }
 
+  /**
+   * Check if the value contained is non-null.
+   */
+  public isPresent(): boolean {
+    return !!this.value;
+  }
+
+  /**
+   * If a non-null value is present, execute a consumer fn(T)
+   *
+   * @param consumer
+   */
+  public async ifPresent(consumer: (value: T) => Promise<any>): Promise<any> {
+    if (this.value) {
+      return consumer(this.value);
+    }
+
+    return;
+  }
+
+  /**
+   * If present, execute predicate() on the value, returning the value if true, empty Optional otherwise.
+   * @param predicate
+   */
   public async filter(predicate: (value: T) => boolean): Promise<Optional<T>> {
     if (!this.value) {
       return this;
@@ -61,7 +111,12 @@ export class Optional<T> {
     return predicate(this.value) ? this : Optional.empty();
   }
 
-  public async map<U>(mapper: (value: T) => U| null): Promise<Optional<any>> {
+  /**
+   * If present, execute mapper() on the stored value, returning the result as a new Optional,
+   * but return a new empty Optional otherwise.
+   * @param mapper
+   */
+  public async map<U>(mapper: (value: T) => U | null): Promise<Optional<any>> {
     if (!this.value) {
       return Optional.of(this.value);
     }
@@ -73,4 +128,4 @@ export class Optional<T> {
 
     return Optional.of(mapped);
   }
- }
+}

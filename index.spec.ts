@@ -11,7 +11,8 @@ describe("Optional Unit Tests", () => {
     });
 
     it("Can create an empty optional", () => {
-      const emptyNumber: Optional<number> = Optional.empty();
+      const get = (input: number) => input % 2 ? input : null;
+      const emptyNumber: Optional<number> = Optional.ofNullable(get(1));
     });
   });
 
@@ -47,13 +48,13 @@ describe("Optional Unit Tests", () => {
       });
 
       it("will call the supplier if value is not present", async () => {
-        expect(await emptyNumber.orElseGet(() =>  1000)).to.equal(1000);
+        expect(await emptyNumber.orElseGet(() => 1000)).to.equal(1000);
       });
     });
 
     describe("orElseThrow", () => {
       it("will not throw when a value is present", () => {
-          expect(presentNumber.orElseThrow()).to.be.equal(100);
+        expect(presentNumber.orElseThrow()).to.be.equal(100);
       });
 
       it("will throw when a value is not present", () => {
@@ -135,7 +136,7 @@ describe("Optional Unit Tests", () => {
       last: "Roman",
     });
 
-    it ("can map T to T", async () => {
+    it("can map T to T", async () => {
       const reversedData = await presentData.map((data: IData): IData => {
         return {
           first: data.last,
