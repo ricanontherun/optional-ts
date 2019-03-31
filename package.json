@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "repository": "https://github.com/ricanontherun/optional-ts",
   "scripts": {
     "tsc": "node_modules/.bin/tsc",
     "test": "node_modules/mocha/bin/mocha --full-trace -r  ./node_modules/ts-node/register index.spec.ts",
-    "prepublishOnly": "npm install && npm run tsc"
+    "lint": "",
+    "postinstall": "npm run tsc"
   },
   "keywords": [],
   "author": "",
