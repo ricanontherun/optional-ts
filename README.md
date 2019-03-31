@@ -2,7 +2,11 @@
 
 Java 8 Optional\<T>, but for Typescript.
 
-# Usage
+## Installation
+
+`npm install @ricanontherun/optional-ts`
+
+## Usage
 ```typescript
 import {Optional} from 'optional-ts';
 
