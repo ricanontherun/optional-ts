@@ -1,3 +1,8 @@
+type ISupplier<T> = () => T;
+type IPredicate<T> = (value: T) => boolean;
+type IConsumer<T> = (value: T) => Promise<any>;
+type IMapper<T, U> = (value: T) => U | null;
+
 /**
  * Class Optional<T>
  *
@@ -62,7 +67,7 @@ export class Optional<T> {
    *
    * @param supplier
    */
-  public async orElseGet(supplier: () => T): Promise<T> {
+  public async orElseGet(supplier: ISupplier<T>): Promise<T> {
     return this.value ? this.value : supplier();
   }
 
@@ -91,7 +96,7 @@ export class Optional<T> {
    *
    * @param consumer
    */
-  public async ifPresent(consumer: (value: T) => Promise<any>): Promise<any> {
+  public async ifPresent(consumer: IConsumer<T>): Promise<any> {
     if (this.value) {
       return consumer(this.value);
     }
@@ -103,7 +108,7 @@ export class Optional<T> {
    * If present, execute predicate() on the value, returning the value if true, empty Optional otherwise.
    * @param predicate
    */
-  public async filter(predicate: (value: T) => boolean): Promise<Optional<T>> {
+  public async filter(predicate: IPredicate<T>): Promise<Optional<T>> {
     if (!this.value) {
       return this;
     }
@@ -116,7 +121,7 @@ export class Optional<T> {
    * but return a new empty Optional otherwise.
    * @param mapper
    */
-  public async map<U>(mapper: (value: T) => U | null): Promise<Optional<any>> {
+  public async map<U>(mapper: IMapper<T, U>): Promise<Optional<any>> {
     if (!this.value) {
       return Optional.of(this.value);
     }
