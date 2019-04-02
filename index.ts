@@ -1,7 +1,7 @@
-type ISupplier<T> = () => T;
-type IPredicate<T> = (value: T) => boolean;
-type IConsumer<T> = (value: T) => Promise<any>;
-type IMapper<T, U> = (value: T) => U | null;
+export type ISupplier<T> = () => T;
+export type IPredicate<T> = (value: T) => boolean;
+export type IConsumer<T> = (value: T) => Promise<any>;
+export type IMapper<T, U> = (value: T) => U | null;
 
 /**
  * Class Optional<T>

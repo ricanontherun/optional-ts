@@ -1,13 +1,13 @@
 {
   "name": "@ricanontherun/optional-ts",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "repository": "https://github.com/ricanontherun/optional-ts",
   "scripts": {
     "test": "node_modules/mocha/bin/mocha --full-trace -r  ./node_modules/ts-node/register index.spec.ts",
-    "build": "tsc"
+    "prepublishOnly": "npm install && node_modules/.bin/tsc"
   },
   "keywords": [],
   "author": "",
@@ -21,5 +21,8 @@
     "ts-node": "^8.0.3",
     "tslint": "^5.14.0",
     "typescript": "^3.4.1"
-  }
+  },
+  "files": [
+    "build"
+  ]
 }
